@@ -75,7 +75,7 @@ const questions = [
         //Engineer selection:
         type: 'name',
         name: 'empEng',
-        message: 'What is the github profile URL for this engineer? ',
+        message: 'What is the github username for this engineer? ',
         when(answers) {
             return answers.employee === 'Engineer';
         },
@@ -119,35 +119,48 @@ const questions = [
 function getAnswers() {
     return inquirer.prompt(questions).then((answers) => {
         if (answers.choices === 'No') {
+            const generatedHTML = cardData(
+                answers.empMan,
+                answers.empEng,
+                answers.empInt,
+                answers.name,
+                answers.officeNumber,
+                answers.gitHub,
+                answers.schoolName,
+                answers.id,
+                answers.email
+            );
+            fs.writeFile('index.html', generatedHTML, (err) =>
+                console.log(err)
+            );
         } else {
             return getAnswers();
         }
     });
 }
 
-getAnswers().then((answers) => {
-    const generatedHTML = cardData(
-        answers.empMan,
-        answers.empEng,
-        answers.empInt,
-        answers.name,
-        answers.officeNumber,
-        answers.gitHub,
-        answers.schoolName,
-        answers.id,
-        answers.email
-    );
-    fs.writeFile('index.html', generatedHTML, (err) => console.log(err));
-});
+// getAnswers().then((answers) => {
+//     const generatedHTML = cardData(
+//         answers.empMan,
+//         answers.empEng,
+//         answers.empInt,
+//         answers.name,
+//         answers.officeNumber,
+//         answers.gitHub,
+//         answers.schoolName,
+//         answers.id,
+//         answers.email
+//     );
+//     fs.writeFile('index.html', generatedHTML, (err) => console.log(err));
+// });
 
 // const createCard = (new) => {
 //     // Create card
 
-//  <div class="col d-flex justify-content-center">
+//const cardEl = document.createElement('div').style="width:18rem";
+//cardEl.classList.add('col d-flex justify-content-center');
 //const cardEl = document.createElement('div');
-//     cardEl.classList.add('col d-flex justify-content-center');
-//<div class="card" style="width: 18rem">
-//const cardEl = document.createElement('div');
+//cardEl.classList.add('col d-flex justify-content-center');
 
 //     cardEl.classList.add('cardBody');
 //     cardEl.setAttribute('key', tip.tip_id);
