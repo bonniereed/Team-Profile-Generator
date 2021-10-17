@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const cardEl = document.getElementbyid('#heirarchy');
+// const cardEl = document.getElementbyid('#heirarchy');
 const cardData = (
     empMan,
     empEng,
@@ -116,9 +116,12 @@ const questions = [
     },
 ];
 
+const answersArr = [];
+
 function getAnswers() {
     return inquirer.prompt(questions).then((answers) => {
-        if (answers.choices === 'No') {
+        console.log(answers.addAnother);
+        if (!answers.addAnother) {
             const generatedHTML = cardData(
                 answers.empMan,
                 answers.empEng,
@@ -133,34 +136,38 @@ function getAnswers() {
             fs.writeFile('index.html', generatedHTML, (err) =>
                 console.log(err)
             );
+            answersArr.push(answers);
+            return answers;
         } else {
+            answersArr.push(answers);
             return getAnswers();
         }
     });
 }
 
-// getAnswers().then((answers) => {
-//     const generatedHTML = cardData(
-//         answers.empMan,
-//         answers.empEng,
-//         answers.empInt,
-//         answers.name,
-//         answers.officeNumber,
-//         answers.gitHub,
-//         answers.schoolName,
-//         answers.id,
-//         answers.email
-//     );
-//     fs.writeFile('index.html', generatedHTML, (err) => console.log(err));
-// });
+getAnswers().then((answers) => {
+    console.log(answersArr);
+    const generatedHTML = cardData(
+        answers.empMan,
+        answers.empEng,
+        answers.empInt,
+        answers.name,
+        answers.officeNumber,
+        answers.gitHub,
+        answers.schoolName,
+        answers.id,
+        answers.email
+    );
+    fs.writeFile('index.html', generatedHTML, (err) => console.log(err));
+});
 
 // const createCard = (new) => {
 //     // Create card
 
-//const cardEl = document.createElement('div').style="width:18rem";
-//cardEl.classList.add('col d-flex justify-content-center');
-//const cardEl = document.createElement('div');
-//cardEl.classList.add('col d-flex justify-content-center');
+// const cardEl = document.createElement('div').style="width:18rem";
+// cardEl.classList.add('col d-flex justify-content-center');
+// const cardEl = document.createElement('div');
+// cardEl.classList.add('col d-flex justify-content-center');
 
 //     cardEl.classList.add('cardBody');
 //     cardEl.setAttribute('key', tip.tip_id);
