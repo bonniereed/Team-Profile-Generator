@@ -1,47 +1,30 @@
-const Employee = require('employee.test.js');
+//importing the employee class
+const Employee = require('lib/employee.js');
 
-class Engineer extends Employee {
-    constructor(manager, empName, engineer) {
-        const gitHub = gitHub;
+// requiring the engineer subclass
+const Engineer = require('../lib/Engineer');
 
-        super(id, email, officeNumber);
-        this.empName = empName;
-        this.id = id;
-        this.email = email;
-    }
-    getRole() {
-        return 'Engineer';
-    }
-    getgitHub() {
-        return gitHub;
-    }
-}
-describe('Engineer', () => {
-    describe('Initialization', () => {
-        // Positive test
-        it("should create an object with a 'text' property of type of employee", () => {
-            // Arrange
-            const text = 'Employee selection';
+// creates an engineer object
+test('creates an Engineer object', () => {
+    const engineer = new Engineer('Amy', 22, 'amy@gmail.com, seekamy');
 
-            // Act
-            const obj = new Employee(text);
+    expect(engineer.github).toEqual(expect.any(String));
+});
 
-            // Assert
-            expect(obj.text).toEqual(text);
-        });
+// getGithub() now retrieves github username
+test('gets engineer github value', () => {
+    const engineer = new Engineer('Amy', 22, 'amy@gmail.com, seekamy');
 
-        // Exception test
-        it("should throw an error if not provided a 'text' value", () => {
-            // Arrange
-            const cb = () => new Employee();
-            const err = new Error(
-                "Expected parameter 'text' to be a non empty string"
-            );
+    expect(engineer.getGithub()).toEqual(
+        expect.stringContaining(engineer.github.toString())
+    );
+});
 
-            // Assert
-            expect(cb).toThrowError(err);
-        });
-    });
+// getRole() now retrieves employee role
+test('gets role of employee', () => {
+    const engineer = new Engineer('Amy', 22, 'amy@gmail.com, seekamy');
+
+    expect(engineer.getRole()).toEqual('Engineer');
 });
 
 module.exports = {

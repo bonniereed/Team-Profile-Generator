@@ -1,46 +1,30 @@
-const Employee = require('employee.test.js');
+//importing the employee class
+const Employee = require('lib/employee.js');
 
-class Intern extends Employee {
-    constructor(manager, empName, intern) {
-        const school = school;
-        super(id, email, officeNumber);
-        this.empName = empName;
-        this.id = id;
-        this.email = email;
-    }
-    getRole() {
-        return 'Intern';
-    }
-    getSchool() {
-        return school;
-    }
-}
-describe('Intern', () => {
-    describe('Initialization', () => {
-        // Positive test
-        it("should create an object with a 'text' property of type of employee", () => {
-            // Arrange
-            const text = 'Employee selection';
+//imports the intern subclass
+const Intern = require('../lib/Intern');
 
-            // Act
-            const obj = new Employee(text);
+// creates intern object
+test('creates an Intern object', () => {
+    const intern = new Intern('Amy', 22, 'amy@gmail.com', 'SMU');
 
-            // Assert
-            expect(obj.text).toEqual(text);
-        });
+    expect(intern.school).toEqual(expect.any(String));
+});
 
-        // Exception test
-        it("should throw an error if not provided a 'text' value", () => {
-            // Arrange
-            const cb = () => new Employee();
-            const err = new Error(
-                "Expected parameter 'text' to be a non empty string"
-            );
+// etSchool() is retrieved
+test('gets employee school', () => {
+    const intern = new Intern('Amy', 22, 'amy@gmail.com', 'SMU');
 
-            // Assert
-            expect(cb).toThrowError(err);
-        });
-    });
+    expect(intern.getSchool()).toEqual(
+        expect.stringContaining(intern.school.toString())
+    );
+});
+
+//getRole() is retrieved
+test('gets role of employee', () => {
+    const intern = new Intern('Amy', 22, 'amy@gmail.com', 'SMU');
+
+    expect(intern.getRole()).toEqual('Intern');
 });
 
 module.exports = {
