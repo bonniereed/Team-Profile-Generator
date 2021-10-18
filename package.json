@@ -1,0 +1,25 @@
+{
+    "name": "team-profile-generator",
+    "version": "1.0.0",
+    "description": "This project generates a webpage that creates a hierarchy based on user input.",
+    "main": "index.js",
+    "directories": {
+        "lib": "lib"
+    },
+    "scripts": {
+        "test": "jest --verbose test/*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bonniereed/Team-Profile-Generator.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/bonniereed/Team-Profile-Generator/issues"
+    },
+    "homepage": "https://github.com/bonniereed/Team-Profile-Generator#readme",
+    "dependencies": {
+        "jest": "^27.3.0"
+    }
+}

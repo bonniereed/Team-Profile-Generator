@@ -1,5 +1,5 @@
 //importing class emloyee
-const Employee = require('/lib/employee.js');
+const Employee = require('../lib/employee.js');
 
 // importing manager subclass
 const Manager = require('../lib/Manager');
@@ -17,8 +17,3 @@ test('gets role of employee', () => {
 
     expect(manager.getRole()).toEqual('Manager');
 });
-
-module.exports = {
-    Manager,
-    manager,
-};

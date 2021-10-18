@@ -29,42 +29,48 @@ const beginHtml = `<!DOCTYPE html>
   <body>
     <div class="row" id="department">`;
 
-// const cardCreationMan = (manager) => { return `  <div class="col d-flex justify-content-center">
-// <div class="card" style="width: 18rem">
-//   <div class="card-body">
-//     <h5 class="card-title">${manager.getempName}</h5>
-//     <h6 class="card-subtitle mb-2 text-muted">${empMan}<h6>
-//     <section class="card-text">${officeNumber}</section>
-//     <section class="card-text">Employee ID: ${id}</section>
-//     <section class="card-text">Email:${email}</section>
-//   </div>
-// </div>
-// </div>
-// </div>`;
-// const cardCreationEng = `  <div class="col d-flex justify-content-center">
-// <div class="card" style="width: 18rem">
-//   <div class="card-body">
-//     <h5 class="card-title">${empName}</h5>
-//     <h6 class="card-subtitle mb-2 text-muted">${empEng}<h6>
-//     <section class="card-text">${gitHub}$</section>
-//     <section class="card-text">Employee ID: ${id}</section>
-//     <section class="card-text">Email:${email}</section>
-//   </div>
-// </div>
-// </div>
-// </div>`};
-// const cardCreationIntern = `  <div class="col d-flex justify-content-center">
-// <div class="card" style="width: 18rem">
-//   <div class="card-body">
-//     <h5 class="card-title">${empName}</h5>
-//     <h6 class="card-subtitle mb-2 text-muted">$${empInt}<h6>
-//     <section class="card-text">$${schoolName}</section>
-//     <section class="card-text">Employee ID: ${id}</section>
-//     <section class="card-text">Email:${email}</section>
-//   </div>
-// </div>
-// </div>
-// </div>`;
+const cardCreationMan = (manager) => {
+    return `  <div class="col d-flex justify-content-center">
+<div class="card" style="width: 18rem">
+  <div class="card-body">
+    <h5 class="card-title">${manager.getName()}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${manager.getRole()}<h6>
+    <section class="card-text">${manager.getOfficeNumber()}</section>
+    <section class="card-text">Employee ID: ${manager.getId()}</section>
+    <section class="card-text">Email:${manager.getEmail()}</section>
+  </div>
+</div>
+</div>
+</div>`;
+};
+const cardCreationEng = (engineer) => {
+    return `  <div class="col d-flex justify-content-center">
+<div class="card" style="width: 18rem">
+  <div class="card-body">
+    <h5 class="card-title">${engineer.getName()}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${engineer.getRole()}<h6>
+    <section class="card-text">${engineer.getGitHub()}</section>
+    <section class="card-text">Employee ID: ${engineer.getId()}</section>
+    <section class="card-text">Email:${engineer.getEmail()}</section>
+  </div>
+</div>
+</div>
+</div>`;
+};
+const cardCreationIntern = (intern) => {
+    return ` <div class="col d-flex justify-content-center">
+<div class="card" style="width: 18rem">
+  <div class="card-body">
+    <h5 class="card-title">${intern.getName()}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${intern.getRole()}<h6>
+    <section class="card-text">${intern.getSchool()}</section>
+    <section class="card-text">Employee ID: ${intern.getId()}</section>
+    <section class="card-text">Email:${intern.getEmail()}</section>
+  </div>
+</div>
+</div>
+</div>`;
+};
 
 const endHtml = `<script
 src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -86,8 +92,8 @@ const questions = [
     },
     {
         //Manager selection:
-        type: 'name',
-        name: 'empMan',
+        type: 'input',
+        name: 'officeNumber',
         message: 'What is your office number?',
         when(answers) {
             return answers.employee === 'Manager';
@@ -95,8 +101,8 @@ const questions = [
     },
     {
         //Engineer selection:
-        type: 'name',
-        name: 'empEng',
+        type: 'input',
+        name: 'gitHub',
         message: 'What is the github username for this engineer? ',
         when(answers) {
             return answers.employee === 'Engineer';
@@ -104,8 +110,8 @@ const questions = [
     },
     {
         //Intern selection:
-        type: 'name',
-        name: 'empInt',
+        type: 'input',
+        name: 'school',
         message: 'Which school is the intern attending?',
         when(answers) {
             return answers.employee === 'Intern';
@@ -113,8 +119,8 @@ const questions = [
     },
     {
         // Employee name
-        name: 'name',
         type: 'input',
+        name: 'empName',
         message: "What is the employee's name?",
     },
     {
@@ -125,8 +131,8 @@ const questions = [
     },
     {
         // Employee email
-        name: 'email',
         type: 'input',
+        name: 'email',
         message: "What is the employee's email address?",
     },
     {
@@ -142,7 +148,12 @@ const cardArr = [];
 const checkAddAnother = (answers, cardStr) => {
     if (!answers.addAnother) {
         cardArr.push(cardStr);
-        return answers;
+        console.log(cardArr);
+        //construct html
+        const generatedHTML = beginHtml + cardArr.join() + endHtml;
+        fs.writeFileSync('./output/index.html', generatedHTML);
+        //write your file
+        return;
     } else {
         cardArr.push(cardStr);
         return getAnswers();
@@ -151,8 +162,8 @@ const checkAddAnother = (answers, cardStr) => {
 
 function getAnswers() {
     return inquirer.prompt(questions).then((answers) => {
-        console.log(answers.addAnother);
-
+        // console.log(answers.addAnother);
+        console.log(answers.empName);
         switch (answers.employee) {
             case 'Manager': {
                 //1. make a new instance of manager
@@ -162,12 +173,12 @@ function getAnswers() {
                     answers.email,
                     answers.officeNumber
                 );
-                // const manager = new Manager(answers.empName, etc..)
+                const cardStr = cardCreationMan(manager);
+                checkAddAnother(answers, cardStr);
                 //createManagerCard(manager)
                 //2. generate manager card html using your methods
                 //3. checkAddAnother
                 //5.
-                console.log("I'm a manager!", answers);
                 break;
             }
             case 'Engineer': {
@@ -179,7 +190,8 @@ function getAnswers() {
                     answers.email,
                     answers.gitHub
                 );
-                console.log("I'm an Engineer!", answers);
+                const cardStr = cardCreationEng(engineer);
+                checkAddAnother(answers, cardStr);
                 break;
             }
             case 'Intern': {
@@ -188,48 +200,27 @@ function getAnswers() {
                     answers.empName,
                     answers.id,
                     answers.email,
-                    answers.officeNumber
+                    answers.school
                 );
-                console.log("I'm an intern", answers);
+                const cardStr = cardCreationIntern(intern);
+                checkAddAnother(answers, cardStr);
                 break;
             }
-        }
-        if (!answers.addAnother) {
-            // const generatedHTML = cardData(
-            //     answers.empMan,
-            //     answers.empEng,
-            //     answers.empInt,
-            //     answers.name,
-            //     answers.officeNumber,
-            //     answers.gitHub,
-            //     answers.schoolName,
-            //     answers.id,
-            //     answers.email
-            // );
-            // fs.writeFile('index.html', generatedHTML, (err) =>
-            //     console.log(err)
-            // );
-            answersArr.push(answers);
-            return answers;
-        } else {
-            answersArr.push(answers);
-            return getAnswers();
         }
     });
 }
 
 getAnswers().then((answers) => {
-    console.log(answersArr);
-    const generatedHTML = cardData(
-        answers.empMan,
-        answers.empEng,
-        answers.empInt,
-        answers.name,
-        answers.officeNumber,
-        answers.gitHub,
-        answers.schoolName,
-        answers.id,
-        answers.email
-    );
-    fs.writeFile('index.html', generatedHTML, (err) => console.log(err));
+    // const generatedHTML = cardData(
+    //     answers.empMan,
+    //     answers.empEng,
+    //     answers.empInt,
+    //     answers.name,
+    //     answers.officeNumber,
+    //     answers.gitHub,
+    //     answers.schoolName,
+    //     answers.id,
+    //     answers.email
+    //     );
+    //     fs.writeFile('index.html', generatedHTML, (err) => console.log(err));
 });
