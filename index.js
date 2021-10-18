@@ -6,32 +6,32 @@ const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
 // const cardEl = document.getElementbyid('#heirarchy');
-const beginHtml = `<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="./assets/style.css" />
-  </head>
+const beginHtml = `<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title></title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<header>
+  <nav class="navbar navbar-light bg-light">
+      <span class="navbar-brand mb-0 h1">Team Profile Generator</span>
+    </nav>
+</header>
   <body>
     <div class="row" id="department">`;
 
 const cardCreationMan = (manager) => {
-    return `  <div class="col d-flex justify-content-center">
-<div class="card" style="width: 18rem">
+    return `  <div class="row d-flex justify-content-center">
+    <div class="card" style="width: 18rem">
   <div class="card-body">
     <h5 class="card-title">${manager.getName()}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${manager.getRole()}<h6>
@@ -39,12 +39,10 @@ const cardCreationMan = (manager) => {
     <section class="card-text">Employee ID: ${manager.getId()}</section>
     <section class="card-text">Email:${manager.getEmail()}</section>
   </div>
-</div>
-</div>
 </div>`;
 };
 const cardCreationEng = (engineer) => {
-    return `  <div class="col d-flex justify-content-center">
+    return `
 <div class="card" style="width: 18rem">
   <div class="card-body">
     <h5 class="card-title">${engineer.getName()}</h5>
@@ -53,13 +51,10 @@ const cardCreationEng = (engineer) => {
     <section class="card-text">Employee ID: ${engineer.getId()}</section>
     <section class="card-text">Email:${engineer.getEmail()}</section>
   </div>
-</div>
-</div>
 </div>`;
 };
 const cardCreationIntern = (intern) => {
-    return ` <div class="col d-flex justify-content-center">
-<div class="card" style="width: 18rem">
+    return `<div class="card" style="width: 18rem">
   <div class="card-body">
     <h5 class="card-title">${intern.getName()}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${intern.getRole()}<h6>
@@ -67,8 +62,6 @@ const cardCreationIntern = (intern) => {
     <section class="card-text">Employee ID: ${intern.getId()}</section>
     <section class="card-text">Email:${intern.getEmail()}</section>
   </div>
-</div>
-</div>
 </div>`;
 };
 
